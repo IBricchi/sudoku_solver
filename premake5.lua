@@ -22,6 +22,7 @@ project "sudoku_solver"
     language "C++"
 
     dependson "GLFW"
+    dependson "glad"
 
     targetdir ("%{wks.location}/bin/" .. outputdir .. "/%{prj.name}")
     objdir ("%{wks.location}/bin/obj/" .. outputdir .. "/%{prj.name}")
