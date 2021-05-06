@@ -1,0 +1,67 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build Debug",
+            "type": "shell",
+            "command": "msbuild",
+            "args": [
+                "-p:Configuration=debug",
+                "-p:Platform=win64"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "Clean Debug",
+            "type": "shell",
+            "command": "msbuild",
+            "args": [
+                "-t:clean",
+                "-p:Configuration=debug"
+            ]
+        },
+        {
+            "label": "Run Debug",
+            "type": "shell",
+            "command": "${workspaceFolder}/bin/debug/win64/sudoku_solver/sudoku_solver.exe",
+            "args": [],
+            "dependsOn": "Build Debug"
+        },
+        {
+            "label": "Build Release",
+            "type": "shell",
+            "command": "msbuild.exe",
+            "args": [
+                "-p:Configuration=release",
+                "-p:Platform=win64"
+            ],
+        },
+        {
+            "label": "Clean Release",
+            "type": "shell",
+            "command": "msbuild",
+            "args": [
+                "-t:clean",
+                "-p:Configuration=release"
+            ]
+        },
+        {
+            "label": "Run Release",
+            "type": "shell",
+            "command": "${workspaceFolder}/bin/release/win64/sudoku_solver/sudoku_solver.exe",
+            "dependsOn": "Build Release"
+        },
+        {
+            "label": "Build Premake",
+            "type": "shell",
+            "command": "${workspaceFolder}/vendor/premake/premake5.exe",
+            "args": [
+                "--file=${workspaceFolder}/premake5.lua",
+                "vs2019"
+            ],
+            "group": "build"
+        }
+    ]
+}
