@@ -8,7 +8,7 @@
             "name": "Debug",
             "type": "cppvsdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/bin/debug/win64/sudoku_solver.exe",
+            "program": "${workspaceFolder}/bin/debug/win64/sudoku_solver/sudoku_solver.exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
