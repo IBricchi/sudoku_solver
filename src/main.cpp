@@ -8,44 +8,6 @@
 
 #include "shader.h"
 
-static unsigned int compile_shader(const ShaderPtr& shader){
-    unsigned int id = glCreateShader(shader->get_gl_type());
-    const char* src = shader->get_data();
-    glShaderSource(id, 1, &src, nullptr);
-    glCompileShader(id);
-
-    int result;
-    glGetShaderiv(id, GL_COMPILE_STATUS, &result);
-    if(result == GL_FALSE){
-        int length;
-        glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
-        char* message = (char*) alloca(length * sizeof(char));
-        glGetShaderInfoLog(id, length, &length, message);
-        std::cout << "Failed To Compile! " << shader->get_type_name() << std::endl;
-        std::cout << message << "'" << std::endl;
-
-        glDeleteShader(id);
-    }
-
-    return id;
-}
-
-static unsigned int create_shader(const ShaderPtr& vertexShader, const ShaderPtr& fragmentShader){
-    unsigned int program = glCreateProgram();
-    unsigned int vs = compile_shader(vertexShader);
-    unsigned int fs = compile_shader(fragmentShader);
-
-    glAttachShader(program, vs);
-    glAttachShader(program, fs);
-    glLinkProgram(program);
-    glValidateProgram(program);
-
-    glDeleteShader(vs);
-    glDeleteShader(fs);
-
-    return program;
-}
-
 void error_callback(int error, const char* description)
 {
     fprintf(stderr, "Error: %s\n", description);
@@ -91,9 +53,17 @@ int main(){
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float)*2, 0);
 
     auto[vertexShader, fragmentShader] = Shader::load_simple_format("src/basic.glsl");
-    unsigned int shader = create_shader(vertexShader, fragmentShader);
-    glUseProgram(shader);
+    vertexShader->compile();
+    fragmentShader->compile();
+
+    unsigned int shader = glCreateProgram();
+    vertexShader->attach(shader);
+    fragmentShader->attach(shader);    
     
+    glLinkProgram(shader);
+    glValidateProgram(shader);
+    glUseProgram(shader);
+
     // run loop until closed
     while(!glfwWindowShouldClose(window)){
         
