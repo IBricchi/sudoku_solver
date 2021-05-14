@@ -1,40 +1,11 @@
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
 
-#include <iostream>
-#include <fstream>
-#include <tuple>
-#include <sstream>
-
+#include "window.h"
 #include "shader.h"
 
-void error_callback(int error, const char* description)
-{
-    fprintf(stderr, "Error: %s\n", description);
-}
-
 int main(){
-    GLFWwindow* window;
-
-    // initialize opengl
-    if(!glfwInit()){
-        return -1;
-    }
-
-    // setup error callback
-    glfwSetErrorCallback(error_callback);
-
-    // initialize window
-    window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
-    if(!window){
-        return -1;
-    }
-
-    // make window current context
-    glfwMakeContextCurrent(window);
-
-    // setup glad
-    gladLoadGL();
+    Window window("Hello World", 640, 480);
 
     // buffer data
     float positions[] = {
@@ -65,19 +36,8 @@ int main(){
     glUseProgram(shader);
 
     // run loop until closed
-    while(!glfwWindowShouldClose(window)){
-        
-        // render here
-        glClear(GL_COLOR_BUFFER_BIT);
-
-        // draw buffer
-        glDrawArrays(GL_TRIANGLES, 0, 3);    
-
-        // swap front and back buffers
-        glfwSwapBuffers(window);
-
-        // poll for process and events
-        glfwPollEvents();
+    while(!window.should_close()){
+        window.render_loop();
     }
 
     glDeleteProgram(shader);

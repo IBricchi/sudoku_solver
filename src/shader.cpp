@@ -78,7 +78,7 @@ std::tuple<ShaderPtr, ShaderPtr> Shader::load_simple_format(std::string&& src){
             }
         }
         else if(!has_specified && !has_warned){
-            std::cerr << "Shader: Line " << line_num << "] Shader type not specified. Expected vertex of fragment." << std::endl;
+            std::cerr << "[Shader: Line " << line_num << "] Shader type not specified. Expected vertex of fragment." << std::endl;
             has_warned = true;
         }
         else if(current_type != Type::none){
