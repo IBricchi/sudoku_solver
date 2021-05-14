@@ -10,7 +10,6 @@ project "glad"
 
     files{
         "src/glad.c",
-        "src/glad.c",
     }
 
     filter "system:linux"

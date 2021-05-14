@@ -20,6 +20,7 @@ include "vendor/glad/premake5.lua"
 project "sudoku_solver"
     kind "ConsoleApp"
     language "C++"
+    cppdialect "c++latest"
 
     dependson "GLFW"
     dependson "glad"
@@ -34,11 +35,16 @@ project "sudoku_solver"
         "%{wks.location}/vendor/glad/include/",
     }
 
+    defines {
+        "GLFW_INCLUDE_NONE"
+    }
+
     filter "platforms:win64"
         staticruntime "on"
         links {
+            "OpenGL32.lib",
             "GLFW",
-            "OpenGL32.lib"
+            "glad",
         }
 
     filter "configurations:debug"

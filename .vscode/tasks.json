@@ -11,7 +11,14 @@
                 "-p:Configuration=debug",
                 "-p:Platform=win64"
             ],
-            "problemMatcher": "$msCompile"
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": true
+            }
         },
         {
             "label": "Clean Debug",
@@ -20,14 +27,30 @@
             "args": [
                 "-t:clean",
                 "-p:Configuration=debug"
-            ]
+            ],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": true
+            }
         },
         {
             "label": "Run Debug",
             "type": "shell",
             "command": "${workspaceFolder}/bin/debug/win64/sudoku_solver/sudoku_solver.exe",
             "args": [],
-            "dependsOn": "Build Debug"
+            "dependsOn": "Build Debug",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": true
+            }
         },
         {
             "label": "Build Release",
@@ -37,6 +60,14 @@
                 "-p:Configuration=release",
                 "-p:Platform=win64"
             ],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": true
+            }
         },
         {
             "label": "Clean Release",
@@ -45,13 +76,29 @@
             "args": [
                 "-t:clean",
                 "-p:Configuration=release"
-            ]
+            ],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": true
+            }
         },
         {
             "label": "Run Release",
             "type": "shell",
             "command": "${workspaceFolder}/bin/release/win64/sudoku_solver/sudoku_solver.exe",
-            "dependsOn": "Build Release"
+            "dependsOn": "Build Release",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": true
+            }
         },
         {
             "label": "Build Premake",
@@ -61,7 +108,15 @@
                 "--file=${workspaceFolder}/premake5.lua",
                 "vs2019"
             ],
-            "group": "build"
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": true
+            }
         }
     ]
 }
