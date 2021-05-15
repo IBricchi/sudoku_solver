@@ -1,4 +1,5 @@
 #include "shader.h"
+#include "logger.h"
 
 #include <glad/glad.h>
 
@@ -27,7 +28,7 @@ void Shader::data_from_file(std::string& src){
     std::ifstream shaderFile(src);
 
     if(!shaderFile){
-        std::cerr << "[Shader] Unable to open file '" << src << "'." << std::endl;
+        LOG_ERR("Unable to open file '{}}'.", src);
         return;
     }
     
@@ -49,7 +50,7 @@ std::tuple<ShaderPtr, ShaderPtr> Shader::load_simple_format(std::string&& src){
     std::ifstream shaderFile(src);
 
     if(!shaderFile){
-        std::cerr << "[Shader] Unable to open file '" << src << "'." << std::endl;
+        LOG_ERR("Unable to open file '{}'.", src);
         return {nullptr, nullptr};
     }
 
@@ -73,12 +74,12 @@ std::tuple<ShaderPtr, ShaderPtr> Shader::load_simple_format(std::string&& src){
             }
             else{
                 current_type = Type::none;
-                std::cerr << "[Shader: Line " << line_num << "] Unknown shader type specified. Expected vertex or fragment." << std::endl;
+                LOG_WARN("<File: {}, Line: {}> Unknown shader type specified. Expected vertex or fragment.", src, line);
                 has_warned = true;
             }
         }
         else if(!has_specified && !has_warned){
-            std::cerr << "[Shader: Line " << line_num << "] Shader type not specified. Expected vertex of fragment." << std::endl;
+            LOG_WARN("<File: {}, Line: {}> Shader type not specified. Expected vertex or fragment.", src, line);
             has_warned = true;
         }
         else if(current_type != Type::none){
@@ -141,9 +142,7 @@ int Shader::compile(){
         glGetShaderiv(gl_id, GL_INFO_LOG_LENGTH, &length);
         char* message = (char*) alloca(length * sizeof(char));
         glGetShaderInfoLog(gl_id, length, &length, message);
-        std::cout << "Failed To Compile! " << this->get_type_name() << std::endl;
-        std::cout << message << "'" << std::endl;
-
+        LOG_ERR("Failed to compile {} shader. OpenGL error:\n {}", this->get_type_name(), message);
         glDeleteShader(gl_id);
     }
 

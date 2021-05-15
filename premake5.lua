@@ -33,6 +33,7 @@ project "sudoku_solver"
     includedirs {
         "%{wks.location}/vendor/GLFW/include/",
         "%{wks.location}/vendor/glad/include/",
+        "%{wks.location}/vendor/spdlog/include/",
     }
 
     defines {

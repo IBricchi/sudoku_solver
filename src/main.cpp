@@ -1,10 +1,20 @@
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
 
+#include <spdlog/spdlog.h>
+
+#include "logger.h"
 #include "window.h"
 #include "shader.h"
 
 int main(){
+    Logger::init("SS");
+
+    LOG_INFO("Hello World!");
+    LOG_WARN("Hello World!");
+    LOG_ERR("Hello World!");
+    LOG_CRIT("Hello World!");
+
     Window window("Hello World", 640, 480);
 
     // buffer data

@@ -1,4 +1,5 @@
 #include "window.h"
+#include "logger.h"
 
 #include <glad/glad.h>
 
@@ -9,12 +10,12 @@ static bool glad_init = false;
 
 static void error_callback(int error, const char* description)
 {
-    std::cerr << "[GLFW] Error: " << description << std::endl;
+    LOG_ERR(description);
 }
 
 static bool glfw_initialize(){
     if(!glfwInit()){
-        std::cerr << "[GLFW] Error: Unable to intialize glfw." << std::endl;
+        LOG_CRIT("Unable to intialize glfw.");
         return false;
     }
     
@@ -38,7 +39,7 @@ Window::Window(std::string&& title, int w, int h):
     // initialize window
     gl_window = glfwCreateWindow(w, h, title.c_str(), NULL, NULL);
     if(!gl_window){
-        std::cerr << "[GLFW] Error: Unable to create widnow." << std::endl;
+        LOG_CRIT("Unable to create widnow.");
         return;
     }
 
@@ -48,7 +49,7 @@ Window::Window(std::string&& title, int w, int h):
     // intialize glad
     if(!glad_init){
         if(!gladLoadGL()){
-            std::cerr << "[Window] Error: Unable to initialize glad." << std::endl;
+            LOG_CRIT("Unable to initialize glad.");
             return;
         }
         glad_init = true;
